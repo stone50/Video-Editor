@@ -1,7 +1,7 @@
 # Video Editor
  
 ## Cut Duplicate Frames
-Produces a new .mp4 video file where similar consecutive frames have been removed
+Produces a new .mp4 video file where similar consecutive frames have been cut from the original. The new file will be in the same directory as cut_duplicate_frames.py
 
 **Usage:** cut_duplicate_frames.py \<fileName\> [--threshold] [--no-messages]
 
