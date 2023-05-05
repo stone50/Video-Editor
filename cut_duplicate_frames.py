@@ -22,7 +22,7 @@ def cut_duplicate_frames(inputFileName: str, similarityThreshold: float = 1, pri
 
     # open the output video
     outputVideo = cv2.VideoWriter(
-        f"{inputFileName}_cut.mp4",
+        f"{inputFileName[:inputFileName.rfind('.')]}_cut.mp4",
         cv2.VideoWriter_fourcc(*"mp4v"),
         INPUT_VIDEO_FPS,
         (
@@ -38,7 +38,10 @@ def cut_duplicate_frames(inputFileName: str, similarityThreshold: float = 1, pri
         # print progress
         if printMessages:
             print(
-                f"\rVideo Time Elapsed: {format_time(int(inputVideo.get(cv2.CAP_PROP_POS_MSEC)))}\t( {inputVideo.get(cv2.CAP_PROP_POS_FRAMES) / INPUT_VIDEO_FRAME_COUNT:.2%} )", end="")
+                f"\rVideo Time Elapsed: {format_time(int(inputVideo.get(cv2.CAP_PROP_POS_MSEC)))}" +
+                f"\t( {inputVideo.get(cv2.CAP_PROP_POS_FRAMES) / INPUT_VIDEO_FRAME_COUNT:.2%} )",
+                end=""
+            )
 
         # copy the frame to the output video if it is different than the previous frame
         if get_image_similarity(frame, previousFrame) < similarityThreshold:
@@ -53,7 +56,8 @@ def cut_duplicate_frames(inputFileName: str, similarityThreshold: float = 1, pri
     if printMessages:
         print('\n')
         print(
-            f"New Video Length: {format_time(int(framesCopied * 1_000 / INPUT_VIDEO_FPS))}")
+            f"New Video Length: {format_time(int(framesCopied * 1_000 / INPUT_VIDEO_FPS))}"
+        )
 
     # cleanup
     inputVideo.release()
